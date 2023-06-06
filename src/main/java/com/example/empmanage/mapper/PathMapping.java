@@ -9,4 +9,8 @@ public class PathMapping {
     public String index(){
         return "index";
     }
+    @GetMapping("/admin_panel")
+    public String adminPanel(){
+        return  "admin_panel";
+    }
 }
