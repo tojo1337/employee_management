@@ -1,14 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
 </head>
 <body>
-<p>
-  This is a simple admin panel<br>
-  This is where the crud operation will be performed<br>
-  It is supposed to be a redirect after a successful login as admin<br>
-</p>
+<!-- Add some stuff in here -->
+<div>
+    <form action="#" th:action="@{/admin_panel}" th:object="${empdata}" method="post">
+        <label>Name : </label>
+        <input type="text" th:field="*{name}"><br>
+        <label>Age : </label>
+        <input type="text" th:field="*{age}"><br>
+        <label>Phone number : </label>
+        <input type="text" th:field="*{phoneNumber}"><br>
+        <label>Salary : </label>
+        <input type="text" th:field="*{salary}"><br>
+        <input type="submit" value="submit">
+    </form>
+</div>
 </body>
 </html>
