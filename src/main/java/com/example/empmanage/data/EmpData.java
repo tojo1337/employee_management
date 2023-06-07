@@ -3,7 +3,7 @@ package com.example.empmanage.data;
 public class EmpData {
     private String name;
     private int age;
-    private int phoneNumber;
+    private String phoneNumber;
     private float salary;
 
     public EmpData() {
@@ -25,11 +25,11 @@ public class EmpData {
         this.age = age;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

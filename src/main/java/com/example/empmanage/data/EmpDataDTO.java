@@ -12,7 +12,7 @@ public class EmpDataDTO {
     private int id;
     private String name;
     private int age;
-    private int phoneNumber;
+    private String phoneNumber;
     private float salary;
 
     public EmpDataDTO() {
@@ -42,11 +42,11 @@ public class EmpDataDTO {
         this.age = age;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

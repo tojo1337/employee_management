@@ -31,7 +31,12 @@ public class PathMapping {
     @PostMapping("/admin_panel")
     public String addEmpData(Model model, @ModelAttribute("empdata") EmpData data){
         //This will deal with the instance where admin adds new employee
-        System.out.println("[*]Name : "+data.getName());
+        EmpDataDTO dataDTO = new EmpDataDTO();
+        dataDTO.setName(data.getName());
+        dataDTO.setAge(data.getAge());
+        dataDTO.setPhoneNumber(data.getPhoneNumber());
+        dataDTO.setSalary(data.getSalary());
+        repo.save(dataDTO);
         return "redirect:/admin_panel";
     }
 }
