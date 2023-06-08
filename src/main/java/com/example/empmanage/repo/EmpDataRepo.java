@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmpDataRepo extends JpaRepository<EmpDataDTO,Integer> {
+    EmpDataDTO getReferenceById(int id);
 }

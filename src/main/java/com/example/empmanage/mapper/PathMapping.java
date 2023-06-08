@@ -39,4 +39,22 @@ public class PathMapping {
         repo.save(dataDTO);
         return "redirect:/admin_panel";
     }
+    @GetMapping("/admin_panel/del/{id}")
+    public String getDelId(@PathVariable("id") int id){
+        repo.deleteById(id);
+        return "redirect:/admin_panel";
+    }
+    @GetMapping("/admin_panel/mod/{id}")
+    public String modData(@PathVariable("id") int id){
+        //Add the update operation in here
+        EmpDataDTO data = repo.getReferenceById(id);
+        System.out.println("[*]Name : "+data.getName());
+        System.out.println("[*]Phone number : "+data.getPhoneNumber());
+        return null;
+    }
+    @PostMapping("/admin_panel/mod/{id}")
+    public String setModData(@PathVariable("id") int id){
+        //Do something that will change the database
+        return null;
+    }
 }
