@@ -76,6 +76,10 @@
                     <td th:text="${emp.age}">
                     <td th:text="${emp.salary}">
                     <td th:text="${emp.phoneNumber}">
+                    <td>
+                        <a class="btn btn-outline-danger" th:href="@{/admin_panel/del/{id}(id=${emp.id})}">delete</a>
+                        <a class="btn btn-outline-primary" th:href="@{/admin_panel/mod/{id}(id=${emp.id})}">modify</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
