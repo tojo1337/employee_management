@@ -50,11 +50,11 @@ public class PathMapping {
         EmpDataDTO data = repo.getReferenceById(id);
         System.out.println("[*]Name : "+data.getName());
         System.out.println("[*]Phone number : "+data.getPhoneNumber());
-        return null;
+        return "redirect:/admin_panel";
     }
     @PostMapping("/admin_panel/mod/{id}")
     public String setModData(@PathVariable("id") int id){
         //Do something that will change the database
-        return null;
+        return "redirect:/admin_panel";
     }
 }
