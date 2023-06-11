@@ -45,16 +45,22 @@ public class PathMapping {
         return "redirect:/admin_panel";
     }
     @GetMapping("/admin_panel/mod/{id}")
-    public String modData(@PathVariable("id") int id){
+    public String modData(@PathVariable("id") int id,Model model){
         //Add the update operation in here
         EmpDataDTO data = repo.getReferenceById(id);
-        System.out.println("[*]Name : "+data.getName());
-        System.out.println("[*]Phone number : "+data.getPhoneNumber());
-        return "redirect:/admin_panel";
+        model.addAttribute("empdata",data);
+        return "modify";
     }
     @PostMapping("/admin_panel/mod/{id}")
-    public String setModData(@PathVariable("id") int id){
+    public String setModData(@PathVariable("id") int id,@ModelAttribute("empdata") EmpDataDTO data){
         //Do something that will change the database
+        /*  System.out.println("[*]Name : "+data.getName());
+        *   System.out.println("[*]Age : "+data.getAge());
+        *   System.out.println("[*]Phone number : "+data.getPhoneNumber());
+        *   System.out.println("[*]Salary : "+data.getSalary());
+        *   System.out.println("[*]Testing complete");
+        */
+        repo.save(data);
         return "redirect:/admin_panel";
     }
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify the value</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <table>
+                <form action="#" th:action="@{/admin_panel/mod/{id}(id=${empdata.id})}" th:object="${empdata}" method="post">
+                    <tr>
+                        <div class="form-group">
+                            <td>
+                                <label>Name : </label>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{name}"><br>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>    
+                        <div class="form-group">
+                            <td>
+                                <label>Age : </label>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{age}"><br>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group">
+                            <td>
+                                <label>Phone number : </label>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{phoneNumber}"><br>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group">
+                            <td>
+                                <label>Salary : </label>
+                            </td>
+                            <td>    
+                                <input type="text" th:field="*{salary}"><br>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="btn btn-outline-primary" type="submit" value="submit"><br>
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
