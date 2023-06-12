@@ -1,6 +1,7 @@
 package com.example.empmanage.config;
 
 import com.sun.jna.platform.win32.Netapi32Util;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
