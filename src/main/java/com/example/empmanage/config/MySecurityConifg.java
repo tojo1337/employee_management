@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
@@ -34,7 +35,7 @@ public class MySecurityConifg {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(httpSecurityCsrfConfigurer -> {}).
                 authorizeHttpRequests(requests->requests.
-                        requestMatchers("/","/register","/success").permitAll().
+                        requestMatchers("/","/register","/success","/content/**").permitAll().
                         anyRequest().authenticated()).
                 formLogin(login->login.permitAll()).
                 httpBasic(httpSecurityHttpBasicConfigurer->{}).build();
@@ -50,4 +51,9 @@ public class MySecurityConifg {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+    /*@Bean
+    public WebSecurityCustomizer securityCustomizer(){
+        return (web) -> web.ignoring().requestMatchers("/static/**");
+    }*/
+    //Did not work
 }
