@@ -51,9 +51,4 @@ public class MySecurityConifg {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    /*@Bean
-    public WebSecurityCustomizer securityCustomizer(){
-        return (web) -> web.ignoring().requestMatchers("/static/**");
-    }*/
-    //Did not work
 }

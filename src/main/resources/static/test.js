@@ -1,0 +1,1 @@
+$(document).ready(()=>{$("#click").click(()=>{alert(1)})})
