@@ -35,7 +35,7 @@ public class MySecurityConifg {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(httpSecurityCsrfConfigurer -> {}).
                 authorizeHttpRequests(requests->requests.
-                        requestMatchers("/","/register","/success","/content/**").permitAll().
+                        requestMatchers("/","/register","/success","/static/**").permitAll().
                         anyRequest().authenticated()).
                 formLogin(login->login.permitAll()).
                 httpBasic(httpSecurityHttpBasicConfigurer->{}).build();
