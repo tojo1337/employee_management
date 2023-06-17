@@ -6,10 +6,12 @@ import com.example.empmanage.data.MyUsers;
 import com.example.empmanage.data.MyUsersDTO;
 import com.example.empmanage.repo.EmpDataRepo;
 import com.example.empmanage.repo.MyUserRepo;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -83,15 +85,24 @@ public class PathMapping {
         return "register";
     }
     @PostMapping("/register")
-    public String register(@ModelAttribute("usrdata") MyUsers user){
+    public String register(@Valid @ModelAttribute("usrdata") MyUsers user){
         /*
         * System.out.println("[*]Username : "+user.getUsername());
         * System.out.println("[*]Password : "+user.getPassword());
         */
+        int defSalary = 30000;
+        //Saving the credentials for a user
         MyUsersDTO userDTO = new MyUsersDTO();
         userDTO.setName(user.getUsername());
         userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        //Saving as employee
+        EmpDataDTO empData = new EmpDataDTO();
+        empData.setName(user.getUsername());
+        empData.setAge(user.getAge());
+        empData.setPhoneNumber(user.getPhoneNumber());
+        empData.setSalary(defSalary);
         userRepo.save(userDTO);
+        repo.save(empData);
         return "redirect:/success";
     }
     @GetMapping("/success")

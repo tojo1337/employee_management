@@ -2,5 +2,8 @@
 *   Add the designs in here
 */
 body{
-	background-color: green;
+	background-color: cyan;
+}
+h1{
+    text-align: center;
 }

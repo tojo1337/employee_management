@@ -31,6 +31,27 @@
                         </div>
                     </tr>
                     <tr>
+                        <div class="form-group">
+                            <td>
+                                <label>Age : </label>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{age}"><br>
+                                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name Error</td>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group">
+                            <td>
+                                <label>Phone number : </label>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{phoneNumber}"><br>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
                         <td>
                             <input class="btn btn-outline-primary" type="submit" value="submit"><br>
                         </td>

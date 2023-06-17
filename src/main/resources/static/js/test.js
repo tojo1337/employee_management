@@ -1,1 +1,1 @@
-$(document).ready(()=>{$("#click").click(()=>{alert(1)})})
+$(document).ready(()=>{alert("Hello world here")})
