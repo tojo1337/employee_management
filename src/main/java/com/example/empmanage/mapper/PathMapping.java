@@ -1,5 +1,6 @@
 package com.example.empmanage.mapper;
 
+import org.springframework.validation.BindingResult;
 import com.example.empmanage.data.EmpData;
 import com.example.empmanage.data.EmpDataDTO;
 import com.example.empmanage.data.MyUsers;
@@ -85,11 +86,14 @@ public class PathMapping {
         return "register";
     }
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("usrdata") MyUsers user){
+    public String register(@Valid @ModelAttribute("usrdata") MyUsers user,BindingResult bindingResult){
         /*
         * System.out.println("[*]Username : "+user.getUsername());
         * System.out.println("[*]Password : "+user.getPassword());
         */
+        if(bindingResult.hasErrors()){
+            return "register";
+        }
         int defSalary = 30000;
         //Saving the credentials for a user
         MyUsersDTO userDTO = new MyUsersDTO();

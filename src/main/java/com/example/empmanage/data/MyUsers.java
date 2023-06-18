@@ -2,6 +2,7 @@ package com.example.empmanage.data;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class MyUsers {
@@ -10,6 +11,7 @@ public class MyUsers {
     @NotBlank
     @Size(min = 6,max = 10)
     private String password;
+    //@NotNull
     //@Min(18)
     private int age;
     @NotBlank
