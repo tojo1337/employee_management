@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
@@ -17,6 +17,7 @@
                             </td>
                             <td>
                                 <input type="text" th:field="*{username}"><br>
+                                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
                             </td>
                         </div>
                     </tr>
@@ -27,6 +28,7 @@
                             </td>
                             <td>
                                 <input type="password" th:field="*{password}"><br>
+                                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
                             </td>
                         </div>
                     </tr>
@@ -37,7 +39,7 @@
                             </td>
                             <td>
                                 <input type="text" th:field="*{age}"><br>
-                                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name Error</td>
+                                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</td>
                             </td>
                         </div>
                     </tr>
@@ -48,6 +50,7 @@
                             </td>
                             <td>
                                 <input type="text" th:field="*{phoneNumber}"><br>
+                                <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone number Error</td>
                             </td>
                         </div>
                     </tr>

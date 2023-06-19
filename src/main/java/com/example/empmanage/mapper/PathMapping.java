@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,28 +87,30 @@ public class PathMapping {
         return "register";
     }
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("usrdata") MyUsers user,BindingResult bindingResult){
+    public String register(@Valid @ModelAttribute("usrdata") MyUsers user, BindingResult result){
         /*
         * System.out.println("[*]Username : "+user.getUsername());
         * System.out.println("[*]Password : "+user.getPassword());
         */
-        if(bindingResult.hasErrors()){
-            return "register";
+        if(result.hasErrors()){
+            return "redirect:/register";
+        }else {
+            //
+            int defSalary = 30000;
+            //Saving the credentials for a user
+            MyUsersDTO userDTO = new MyUsersDTO();
+            userDTO.setName(user.getUsername());
+            userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            //Saving as employee
+            EmpDataDTO empData = new EmpDataDTO();
+            empData.setName(user.getUsername());
+            empData.setAge(user.getAge());
+            empData.setPhoneNumber(user.getPhoneNumber());
+            empData.setSalary(defSalary);
+            userRepo.save(userDTO);
+            repo.save(empData);
+            return "redirect:/success";
         }
-        int defSalary = 30000;
-        //Saving the credentials for a user
-        MyUsersDTO userDTO = new MyUsersDTO();
-        userDTO.setName(user.getUsername());
-        userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        //Saving as employee
-        EmpDataDTO empData = new EmpDataDTO();
-        empData.setName(user.getUsername());
-        empData.setAge(user.getAge());
-        empData.setPhoneNumber(user.getPhoneNumber());
-        empData.setSalary(defSalary);
-        userRepo.save(userDTO);
-        repo.save(empData);
-        return "redirect:/success";
     }
     @GetMapping("/success")
     public String getLogin(){
