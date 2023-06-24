@@ -1,7 +1,10 @@
 package com.example.empmanage.config;
 
+import com.example.empmanage.data.MyUserDetails;
 import com.example.empmanage.service.MyUserDetailsService;
 import com.sun.jna.platform.win32.Netapi32Util;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -16,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +28,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +44,14 @@ public class MySecurityConifg {
                 authorizeHttpRequests(requests->requests.
                         requestMatchers("/","/register","/success","/static/**").permitAll().
                         anyRequest().authenticated()).
-                formLogin(login->login.permitAll()).
+                formLogin(login->login.permitAll().successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+                        System.out.println("Name : "+userDetails.getUsername()+"\tRole:"+userDetails.getAuthorities());
+                        // response.sendRedirect("/admin_panel");
+                    }
+                })).
                 httpBasic(httpSecurityHttpBasicConfigurer->{}).build();
     }
     @Bean
