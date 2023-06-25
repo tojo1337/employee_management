@@ -43,12 +43,26 @@ public class MySecurityConifg {
         return http.csrf(httpSecurityCsrfConfigurer -> {}).
                 authorizeHttpRequests(requests->requests.
                         requestMatchers("/","/register","/success","/static/**").permitAll().
+                        requestMatchers("/admin_panel**").hasAuthority("admin").
+                        requestMatchers("/user**").hasAuthority("user").
                         anyRequest().authenticated()).
                 formLogin(login->login.permitAll().successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-                        System.out.println("Name : "+userDetails.getUsername()+"\tRole:"+userDetails.getAuthorities());
+                        String name = userDetails.getUsername();
+                        String role = String.valueOf(userDetails.getAuthorities().stream().iterator().next());
+                        System.out.println("[*]\tName : "+userDetails.getUsername()+"\tRole:"+role);
+                        if(role.equals("user")){
+                            System.out.println("[*]User authority detected");
+                            response.sendRedirect("/user/"+name);
+                        }else if(role.equals("admin")){
+                            System.out.println("[*]Admin authority detected");
+                            response.sendRedirect("/admin_panel");
+                        }else {
+                            System.out.println("[*]Unable to understand logged in user authority");
+                            response.sendRedirect("/");
+                        }
                         // response.sendRedirect("/admin_panel");
                     }
                 })).

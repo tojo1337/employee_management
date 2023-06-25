@@ -51,6 +51,10 @@ public class PathMapping {
     }
     @GetMapping("/admin_panel/del/{id}")
     public String getDelId(@PathVariable("id") int id){
+        /*
+        * Make it so that not only the employee database entry is removed but also the entry on authentication list is also removed
+        * Need to work around something to make it do that
+        */
         repo.deleteById(id);
         return "redirect:/admin_panel";
     }
@@ -101,6 +105,7 @@ public class PathMapping {
             MyUsersDTO userDTO = new MyUsersDTO();
             userDTO.setName(user.getUsername());
             userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            userDTO.setRole("user");
             //Saving as employee
             EmpDataDTO empData = new EmpDataDTO();
             empData.setName(user.getUsername());
@@ -114,6 +119,24 @@ public class PathMapping {
     }
     @GetMapping("/success")
     public String getLogin(){
+        return "success";
+    }
+    @GetMapping("/user/{username}")
+    public String userStatus(@PathVariable("username")String name){
+        EmpDataDTO empData = repo.getReferenceByName(name);
+        System.out.println("[*]Name : "+empData.getName());
+        System.out.println("[*]Salary : "+empData.getSalary());
+        return "success";
+    }
+    @GetMapping("/user/board")
+    public String userBoard(){
+        /*
+        * Add a user board which would allow other users to see each other
+        * It will also allow other users to search users
+        * Try using spring boot to implement search
+        * But it might also be possible to do it with javascript/jquery
+        */
+        System.out.println("[*]Employee board will be shown in here");
         return "success";
     }
 }

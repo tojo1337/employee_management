@@ -11,6 +11,7 @@ public class MyUsersDTO {
     private int id;
     private String name;
     private String password;
+    private String role;
 
     public MyUsersDTO() {
     }
@@ -37,5 +38,13 @@ public class MyUsersDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
