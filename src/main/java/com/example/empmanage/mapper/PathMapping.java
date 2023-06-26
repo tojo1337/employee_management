@@ -121,22 +121,25 @@ public class PathMapping {
     public String getLogin(){
         return "success";
     }
-    @GetMapping("/user/{username}")
-    public String userStatus(@PathVariable("username")String name){
-        EmpDataDTO empData = repo.getReferenceByName(name);
+    @GetMapping("/user/{userid}")
+    public String userStatus(@PathVariable("userid")int id){
+        //Make it so that employee and user will have same user id
+        //Then do the redirect
+        EmpDataDTO empData = repo.getReferenceById(id);
         System.out.println("[*]Name : "+empData.getName());
         System.out.println("[*]Salary : "+empData.getSalary());
-        return "success";
+        return "user_info";
     }
     @GetMapping("/user/board")
-    public String userBoard(){
+    public String userBoard(Model model){
         /*
         * Add a user board which would allow other users to see each other
         * It will also allow other users to search users
         * Try using spring boot to implement search
         * But it might also be possible to do it with javascript/jquery
         */
-        System.out.println("[*]Employee board will be shown in here");
-        return "success";
+        List<EmpDataDTO> list = repo.findAll();
+        model.addAttribute("emplist",list);
+        return "user_list";
     }
 }
