@@ -50,12 +50,12 @@ public class MySecurityConifg {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-                        String name = userDetails.getUsername();
+                        int redirectVal = userDetails.getForeignKey();
                         String role = String.valueOf(userDetails.getAuthorities().stream().iterator().next());
                         System.out.println("[*]\tName : "+userDetails.getUsername()+"\tRole:"+role);
                         if(role.equals("user")){
                             System.out.println("[*]User authority detected");
-                            response.sendRedirect("/user/"+name);
+                            response.sendRedirect("/user/"+redirectVal);
                         }else if(role.equals("admin")){
                             System.out.println("[*]Admin authority detected");
                             response.sendRedirect("/admin_panel");

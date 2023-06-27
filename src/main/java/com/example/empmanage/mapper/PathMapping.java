@@ -112,6 +112,7 @@ public class PathMapping {
             empData.setAge(user.getAge());
             empData.setPhoneNumber(user.getPhoneNumber());
             empData.setSalary(defSalary);
+            userDTO.setForeignKey(empData.getId());
             userRepo.save(userDTO);
             repo.save(empData);
             return "redirect:/success";
@@ -122,12 +123,11 @@ public class PathMapping {
         return "success";
     }
     @GetMapping("/user/{userid}")
-    public String userStatus(@PathVariable("userid")int id){
+    public String userStatus(@PathVariable("userid")int id,Model model){
         //Make it so that employee and user will have same user id
         //Then do the redirect
         EmpDataDTO empData = repo.getReferenceById(id);
-        System.out.println("[*]Name : "+empData.getName());
-        System.out.println("[*]Salary : "+empData.getSalary());
+        model.addAttribute("emp",empData);
         return "user_info";
     }
     @GetMapping("/user/board")

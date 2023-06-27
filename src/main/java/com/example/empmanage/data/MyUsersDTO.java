@@ -12,6 +12,7 @@ public class MyUsersDTO {
     private String name;
     private String password;
     private String role;
+    private int foreignKey;
 
     public MyUsersDTO() {
     }
@@ -46,5 +47,13 @@ public class MyUsersDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getForeignKey() {
+        return foreignKey;
+    }
+
+    public void setForeignKey(int foreignKey) {
+        this.foreignKey = foreignKey;
     }
 }

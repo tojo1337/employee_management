@@ -13,6 +13,12 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(MyUsersDTO users) {
         this.user = users;
     }
+    public int getUserId(){
+        return user.getId();
+    }
+    public int getForeignKey(){
+        return user.getForeignKey();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
