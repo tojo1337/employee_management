@@ -50,7 +50,13 @@ public class MySecurityConifg {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-                        int redirectVal = userDetails.getForeignKey();
+                        int userId = userDetails.getUserId();
+                        int redirectVal = (userId-1);
+                        /*  -1 because there is already the admin in the user database but user database and employee database are not the same
+                         *  Employee database starts from 1 and the employees are mapped according to their id order by using -1 from user database
+                         *  It was the best way for mapping
+                         */
+                        System.out.println("[*]The user id : "+userId);
                         String role = String.valueOf(userDetails.getAuthorities().stream().iterator().next());
                         System.out.println("[*]\tName : "+userDetails.getUsername()+"\tRole:"+role);
                         if(role.equals("user")){

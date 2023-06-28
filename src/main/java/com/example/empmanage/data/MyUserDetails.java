@@ -16,9 +16,6 @@ public class MyUserDetails implements UserDetails {
     public int getUserId(){
         return user.getId();
     }
-    public int getForeignKey(){
-        return user.getForeignKey();
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

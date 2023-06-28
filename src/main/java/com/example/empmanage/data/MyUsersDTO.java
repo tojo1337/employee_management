@@ -1,10 +1,9 @@
 package com.example.empmanage.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 @Entity
+@Table(name = "User")
 public class MyUsersDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,11 +11,9 @@ public class MyUsersDTO {
     private String name;
     private String password;
     private String role;
-    private int foreignKey;
 
     public MyUsersDTO() {
     }
-
     public int getId() {
         return id;
     }
@@ -24,7 +21,6 @@ public class MyUsersDTO {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
@@ -47,13 +43,5 @@ public class MyUsersDTO {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public int getForeignKey() {
-        return foreignKey;
-    }
-
-    public void setForeignKey(int foreignKey) {
-        this.foreignKey = foreignKey;
     }
 }

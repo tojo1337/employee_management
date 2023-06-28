@@ -17,7 +17,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//Making two different table for different functions were the wrong thing in here
+//It makes the system more prone to breaking
+//But uniting it might create some other issues
+//Make the employee registration from the admin side with password
 @Controller
 public class PathMapping {
     @Autowired
@@ -46,7 +49,13 @@ public class PathMapping {
         dataDTO.setAge(data.getAge());
         dataDTO.setPhoneNumber(data.getPhoneNumber());
         dataDTO.setSalary(data.getSalary());
+        //Add the user as the admin should have the permission to do that
+        MyUsersDTO usersDTO = new MyUsersDTO();
+        usersDTO.setName(dataDTO.getName());
+        usersDTO.setPassword(new BCryptPasswordEncoder().encode(dataDTO.getName()));
+        usersDTO.setRole("user");
         repo.save(dataDTO);
+        userRepo.save(usersDTO);
         return "redirect:/admin_panel";
     }
     @GetMapping("/admin_panel/del/{id}")
@@ -112,9 +121,8 @@ public class PathMapping {
             empData.setAge(user.getAge());
             empData.setPhoneNumber(user.getPhoneNumber());
             empData.setSalary(defSalary);
-            userDTO.setForeignKey(empData.getId());
-            userRepo.save(userDTO);
             repo.save(empData);
+            userRepo.save(userDTO);
             return "redirect:/success";
         }
     }
@@ -124,8 +132,6 @@ public class PathMapping {
     }
     @GetMapping("/user/{userid}")
     public String userStatus(@PathVariable("userid")int id,Model model){
-        //Make it so that employee and user will have same user id
-        //Then do the redirect
         EmpDataDTO empData = repo.getReferenceById(id);
         model.addAttribute("emp",empData);
         return "user_info";

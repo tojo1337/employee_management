@@ -1,11 +1,9 @@
 package com.example.empmanage.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Employee")
 public class EmpDataDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +15,6 @@ public class EmpDataDTO {
 
     public EmpDataDTO() {
     }
-
     public int getId() {
         return id;
     }
@@ -25,7 +22,6 @@ public class EmpDataDTO {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
