@@ -148,4 +148,14 @@ public class PathMapping {
         model.addAttribute("emplist",list);
         return "user_list";
     }
+    //Need to implement a password reset that can only be done by the valid user
+    //Need to implement a cookie based checking process or session based process
+    @GetMapping("/user/{userid}/reset-password")
+    public String setPassword(@PathVariable("userid") int id,Model model){
+        return "reset";
+    }
+    @PostMapping("/user/{userid}/reset-password")
+    public String resetPassword(@PathVariable("userid") int id,Model model){
+        return "reset";
+    }
 }
