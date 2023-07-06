@@ -1,5 +1,7 @@
 package com.example.empmanage.mapper;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import com.example.empmanage.data.EmpData;
 import com.example.empmanage.data.EmpDataDTO;
@@ -16,6 +18,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 //Making two different table for different functions were the wrong thing in here
 //It makes the system more prone to breaking
@@ -28,7 +31,7 @@ public class PathMapping {
     @Autowired
     private MyUserRepo userRepo;
     @GetMapping("/")
-    public String index(){
+    public String index(Principal principal){
         return "index";
     }
     @GetMapping("/admin_panel")
@@ -148,15 +151,22 @@ public class PathMapping {
         model.addAttribute("emplist",list);
         return "user_list";
     }
-    //Need to implement a password reset that can only be done by the valid user
-    //Need to implement a cookie based checking process or session based process
+    //There is no need to add special session or cookie as it is already done by spring boot
+    //Use Principal to access the current session id
     @GetMapping("/user/{userid}/reset-password")
-    public String setPassword(@PathVariable("userid") int id,Model model){
-        model.addAttribute("id",id);
-        return "reset";
+    public String setPassword(@PathVariable("userid") int id,Model model,Principal principal){
+        String name = principal.getName();
+        EmpDataDTO empDataDTO = repo.getReferenceByName(name);
+        int uid = empDataDTO.getId();
+        if(uid==id){
+            model.addAttribute("id",uid);
+            return "reset";
+        }else {
+            return "redirect:/error";
+        }
     }
     @PostMapping("/user/{userid}/reset-password")
-    public String resetPassword(@PathVariable("userid") int id,Model model){
+    public String resetPassword(@PathVariable("userid") int id, Model model){
         model.addAttribute("id",id);
         return "reset";
     }
