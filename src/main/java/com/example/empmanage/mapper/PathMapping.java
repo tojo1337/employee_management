@@ -152,10 +152,12 @@ public class PathMapping {
     //Need to implement a cookie based checking process or session based process
     @GetMapping("/user/{userid}/reset-password")
     public String setPassword(@PathVariable("userid") int id,Model model){
+        model.addAttribute("id",id);
         return "reset";
     }
     @PostMapping("/user/{userid}/reset-password")
     public String resetPassword(@PathVariable("userid") int id,Model model){
+        model.addAttribute("id",id);
         return "reset";
     }
 }
