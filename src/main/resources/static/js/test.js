@@ -5,4 +5,4 @@ $(document).ready(function(){
     $("#submit").click(function(){
         alert("User name is the default password");
     })
-})
+});
