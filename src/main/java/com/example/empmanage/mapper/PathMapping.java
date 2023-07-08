@@ -103,7 +103,7 @@ public class PathMapping {
         return "register";
     }
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("usrdata") MyUsers user, BindingResult result){
+    public String register(@Valid @ModelAttribute("usrdata") MyUsers user, BindingResult result,Model model){
         /*
         * System.out.println("[*]Username : "+user.getUsername());
         * System.out.println("[*]Password : "+user.getPassword());
@@ -111,22 +111,32 @@ public class PathMapping {
         if(result.hasErrors()){
             return "redirect:/register";
         }else {
-            //
+            // Add a checking method to check if the username already exists
+            // A model attribute would be user to show the message if username exists
             int defSalary = 30000;
             //Saving the credentials for a user
-            MyUsersDTO userDTO = new MyUsersDTO();
-            userDTO.setName(user.getUsername());
-            userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-            userDTO.setRole("user");
-            //Saving as employee
-            EmpDataDTO empData = new EmpDataDTO();
-            empData.setName(user.getUsername());
-            empData.setAge(user.getAge());
-            empData.setPhoneNumber(user.getPhoneNumber());
-            empData.setSalary(defSalary);
-            repo.save(empData);
-            userRepo.save(userDTO);
-            return "redirect:/success";
+            MyUsersDTO tempUserDTO = userRepo.findByName(user.getUsername());
+            EmpDataDTO tempEmpDTO = repo.getReferenceByName(user.getUsername());
+            if(tempEmpDTO!=null||tempUserDTO!=null){
+                // Do not save the data if it has a matching username
+                model.addAttribute("exists",user.getUsername());
+                return "register";
+            }else {
+                // Save the data only if it has unique username
+                MyUsersDTO userDTO = new MyUsersDTO();
+                userDTO.setName(user.getUsername());
+                userDTO.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+                userDTO.setRole("user");
+                //Saving as employee
+                EmpDataDTO empData = new EmpDataDTO();
+                empData.setName(user.getUsername());
+                empData.setAge(user.getAge());
+                empData.setPhoneNumber(user.getPhoneNumber());
+                empData.setSalary(defSalary);
+                repo.save(empData);
+                userRepo.save(userDTO);
+                return "redirect:/success";
+            }
         }
     }
     @GetMapping("/success")
@@ -153,7 +163,7 @@ public class PathMapping {
     }
     //There is no need to add special session or cookie as it is already done by spring boot
     //Use Principal to access the current session id
-    @GetMapping("/user/{userid}/reset-password")
+    @GetMapping("/user/{userid}/reset")
     public String setPassword(@PathVariable("userid") int id,Model model,Principal principal){
         String name = principal.getName();
         EmpDataDTO empDataDTO = repo.getReferenceByName(name);
@@ -162,12 +172,19 @@ public class PathMapping {
             model.addAttribute("id",uid);
             return "reset";
         }else {
-            return "redirect:/error";
+            return "redirect:/user/"+uid+"reset";
         }
     }
-    @PostMapping("/user/{userid}/reset-password")
-    public String resetPassword(@PathVariable("userid") int id, Model model){
-        model.addAttribute("id",id);
-        return "reset";
+    @PostMapping("/user/{userid}/reset")
+    public String resetPassword(@PathVariable("userid") int id, Model model,Principal principal){
+        String name = principal.getName();
+        EmpDataDTO empDataDTO = repo.getReferenceByName(name);
+        int uid = empDataDTO.getId();
+        if(id==uid){
+            model.addAttribute("id",uid);
+            return "reset";
+        }else {
+            return "redirect:/user/"+uid+"reset";
+        }
     }
 }

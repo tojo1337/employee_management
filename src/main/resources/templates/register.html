@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="container-fluid">
+        <!-- Have already come this far. Need to make some small changes to fix it all -->
+        <p class="h3 bg-danger" th:text="${exists}"></p>
         <div class="container-fluid">
             <table>
                 <form action="#" th:action="@{/register}" th:object="${usrdata}" method="post">
