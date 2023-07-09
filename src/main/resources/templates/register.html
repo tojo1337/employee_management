@@ -44,7 +44,7 @@
                                     <label>Age : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{age}" required tabindex="3"><br>
+                                    <input type="text" th:field="*{age}" required tabindex="3" placeholder="18"><br>
                                     <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</td>
                                 </td>
                             </div>
@@ -55,7 +55,7 @@
                                     <label>Phone number : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{phoneNumber}" required tabindex="4"><br>
+                                    <input type="text" th:field="*{phoneNumber}" required tabindex="4" placeholder="12345"><br>
                                     <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone number Error</td>
                                 </td>
                             </div>

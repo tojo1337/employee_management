@@ -50,23 +50,23 @@ public class PathMapping {
         MyUsersDTO tempUserDTO = userRepo.findByName(data.getName());
         EmpDataDTO tempEmpDTO = repo.getReferenceByName(data.getName());
         if(tempEmpDTO!=null||tempUserDTO!=null){
-            // Complete the admin control
+            return "redirect:/admin_panel";
         }else {
             // Complete the admin control in here
+            EmpDataDTO dataDTO = new EmpDataDTO();
+            dataDTO.setName(data.getName());
+            dataDTO.setAge(data.getAge());
+            dataDTO.setPhoneNumber(data.getPhoneNumber());
+            dataDTO.setSalary(data.getSalary());
+            //Add the user as the admin should have the permission to do that
+            MyUsersDTO usersDTO = new MyUsersDTO();
+            usersDTO.setName(dataDTO.getName());
+            usersDTO.setPassword(new BCryptPasswordEncoder().encode(dataDTO.getName()));
+            usersDTO.setRole("user");
+            repo.save(dataDTO);
+            userRepo.save(usersDTO);
+            return "redirect:/admin_panel";
         }
-        EmpDataDTO dataDTO = new EmpDataDTO();
-        dataDTO.setName(data.getName());
-        dataDTO.setAge(data.getAge());
-        dataDTO.setPhoneNumber(data.getPhoneNumber());
-        dataDTO.setSalary(data.getSalary());
-        //Add the user as the admin should have the permission to do that
-        MyUsersDTO usersDTO = new MyUsersDTO();
-        usersDTO.setName(dataDTO.getName());
-        usersDTO.setPassword(new BCryptPasswordEncoder().encode(dataDTO.getName()));
-        usersDTO.setRole("user");
-        repo.save(dataDTO);
-        userRepo.save(usersDTO);
-        return "redirect:/admin_panel";
     }
     @GetMapping("/admin_panel/del/{id}")
     public String getDelId(@PathVariable("id") int id){
@@ -177,6 +177,8 @@ public class PathMapping {
         EmpDataDTO empDataDTO = repo.getReferenceByName(name);
         int uid = empDataDTO.getId();
         if(uid==id){
+            // Add a way to reset password and other information from user mode
+            // Except some like username, salary etc
             model.addAttribute("id",uid);
             return "reset";
         }else {
@@ -189,6 +191,7 @@ public class PathMapping {
         EmpDataDTO empDataDTO = repo.getReferenceByName(name);
         int uid = empDataDTO.getId();
         if(id==uid){
+            // Get rid of theme and use repository to save data from this api
             model.addAttribute("id",uid);
             return "reset";
         }else {
