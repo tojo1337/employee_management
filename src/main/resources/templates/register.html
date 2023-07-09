@@ -8,63 +8,66 @@
     <script type="text/javascript" th:src="@{/static/js/form.js}"></script>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <!-- Have already come this far. Need to make some small changes to fix it all -->
+        <h1 class="h1 text-center">User registration</h1>
         <p class="h3 bg-danger" th:text="${exists}"></p>
-        <div class="container-fluid">
-            <table>
-                <form action="#" th:action="@{/register}" th:object="${usrdata}" method="post">
-                    <tr>
-                        <div class="form-group">
+        <div class="container row justify-content-center">
+            <div class="col-auto">
+                <table class="table table-borderless table-reponsive-sm">
+                    <form action="#" th:action="@{/register}" th:object="${usrdata}" method="post">
+                        <tr>
+                            <div class="form-group">
+                                <td>
+                                    <label>Name : </label>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
+                                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="form-group">
+                                <td>
+                                    <label>Password : </label>
+                                </td>
+                                <td>
+                                    <input type="password" th:field="*{password}" required tabindex="2"><br>
+                                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="form-group">
+                                <td>
+                                    <label>Age : </label>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{age}" required tabindex="3"><br>
+                                    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</td>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="form-group">
+                                <td>
+                                    <label>Phone number : </label>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{phoneNumber}" required tabindex="4"><br>
+                                    <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone number Error</td>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
                             <td>
-                                <label>Name : </label>
+                                <input class="btn btn-outline-primary" type="submit" value="submit" tabindex="5"><br>
                             </td>
-                            <td>
-                                <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
-                                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
-                            </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div class="form-group">
-                            <td>
-                                <label>Password : </label>
-                            </td>
-                            <td>
-                                <input type="password" th:field="*{password}" required tabindex="2"><br>
-                                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
-                            </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div class="form-group">
-                            <td>
-                                <label>Age : </label>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{age}" required tabindex="3"><br>
-                                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</td>
-                            </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div class="form-group">
-                            <td>
-                                <label>Phone number : </label>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{phoneNumber}" required tabindex="4"><br>
-                                <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone number Error</td>
-                            </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="btn btn-outline-primary" type="submit" value="submit" tabindex="5"><br>
-                        </td>
-                    </tr>
-                </form>
-            </table>
+                        </tr>
+                    </form>
+                </table>
+            </div>
         </div>
     </div>    
 </body>

@@ -47,6 +47,13 @@ public class PathMapping {
     @PostMapping("/admin_panel")
     public String addEmpData(Model model, @ModelAttribute("empdata") EmpData data){
         //This will deal with the instance where admin adds new employee
+        MyUsersDTO tempUserDTO = userRepo.findByName(data.getName());
+        EmpDataDTO tempEmpDTO = repo.getReferenceByName(data.getName());
+        if(tempEmpDTO!=null||tempUserDTO!=null){
+            // Complete the admin control
+        }else {
+            // Complete the admin control in here
+        }
         EmpDataDTO dataDTO = new EmpDataDTO();
         dataDTO.setName(data.getName());
         dataDTO.setAge(data.getAge());
@@ -119,7 +126,8 @@ public class PathMapping {
             EmpDataDTO tempEmpDTO = repo.getReferenceByName(user.getUsername());
             if(tempEmpDTO!=null||tempUserDTO!=null){
                 // Do not save the data if it has a matching username
-                model.addAttribute("exists",user.getUsername());
+                String outputData = "Username already exists : "+user.getUsername();
+                model.addAttribute("exists",outputData);
                 return "register";
             }else {
                 // Save the data only if it has unique username
