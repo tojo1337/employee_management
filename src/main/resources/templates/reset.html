@@ -13,54 +13,55 @@
         <div class="container row justify-content-center">
             <div class="col-auto">
                 <table class="table table-borderless table-responsive-sm">
-                    <form>
+                    <!-- Add respective field according to the thymeleaf declaration -->
+                    <form action="#" th:action="@{/user/{id}/reset}(id=${data.id})" th:object="${data}" method="post">
                         <tr>
                             <div class="form-group">
                                 <td>
                                     <label>Name : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
-                                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                                    <input type="text" th:value="${data.name}"><br>
+                                    <!-- <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td> -->
                                 </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="form-group">
                                 <td>
-                                    <label>Name : </label>
+                                    <label>Password : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
-                                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
-                                </td>
-                            </div>
-                        </tr>
-                        <tr>
-                            <div class="form-group">
-                                <td>
-                                    <label>Name : </label>
-                                </td>
-                                <td>
-                                    <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
-                                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                                    <input type="password" th:field="*{password}" required autofocus tabindex="1"><br>
+                                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
                                 </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="form-group">
                                 <td>
-                                    <label>Name : </label>
+                                    <label>Age : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{username}" required autofocus tabindex="1"><br>
-                                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                                    <input type="text" th:field="*{age}" required autofocus tabindex="2"><br>
+                                    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name Error</td>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="form-group">
+                                <td>
+                                    <label>Phone number : </label>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{phoneNumber}" required autofocus tabindex="3"><br>
+                                    <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</td>
                                 </td>
                             </div>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="col col-sm-12 btn btn-outline-primary btn-lg btn-block" type="submit" value="submit" tabindex="5"><br>
+                                <input class="col col-sm-12 btn btn-outline-primary btn-lg btn-block" type="submit" value="submit" tabindex="4"><br>
                             </td>
                         </tr>
                     </form>

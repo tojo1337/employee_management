@@ -1,12 +1,9 @@
 package com.example.empmanage.mapper;
 
+import com.example.empmanage.data.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
-import com.example.empmanage.data.EmpData;
-import com.example.empmanage.data.EmpDataDTO;
-import com.example.empmanage.data.MyUsers;
-import com.example.empmanage.data.MyUsersDTO;
 import com.example.empmanage.repo.EmpDataRepo;
 import com.example.empmanage.repo.MyUserRepo;
 import jakarta.validation.Valid;
@@ -152,10 +149,16 @@ public class PathMapping {
         return "success";
     }
     @GetMapping("/user/{userid}")
-    public String userStatus(@PathVariable("userid")int id,Model model){
+    public String userStatus(@PathVariable("userid")int id,Model model,Principal principal){
+        String name = principal.getName();
         EmpDataDTO empData = repo.getReferenceById(id);
-        model.addAttribute("emp",empData);
-        return "user_info";
+        String namex = empData.getName();
+        if(name.equals(namex)){
+            model.addAttribute("emp",empData);
+            return "user_info";
+        }else {
+            return "redirect:/user/board";
+        }
     }
     @GetMapping("/user/board")
     public String userBoard(Model model){
@@ -179,23 +182,38 @@ public class PathMapping {
         if(uid==id){
             // Add a way to reset password and other information from user mode
             // Except some like username, salary etc
-            model.addAttribute("id",uid);
+            ResetDataField data = new ResetDataField();
+            data.setId(uid);
+            data.setName(name);
+            model.addAttribute("data",data);
             return "reset";
         }else {
-            return "redirect:/user/"+uid+"reset";
+            return "redirect:/user/"+uid+"/reset";
         }
     }
     @PostMapping("/user/{userid}/reset")
-    public String resetPassword(@PathVariable("userid") int id, Model model,Principal principal){
+    public String resetPassword(@PathVariable("userid") int id, Model model,Principal principal,@Valid @ModelAttribute("data")ResetDataField data,BindingResult result){
         String name = principal.getName();
         EmpDataDTO empDataDTO = repo.getReferenceByName(name);
+        MyUsersDTO usersDTO = userRepo.findByName(name);
         int uid = empDataDTO.getId();
         if(id==uid){
             // Get rid of theme and use repository to save data from this api
-            model.addAttribute("id",uid);
-            return "reset";
+            if(result.hasErrors()){
+                return "redirect:/user/"+uid+"/reset";
+            }else {
+                // Add the code that will save the updated result
+                // Add a no password change option so that the blank input would be considered as default password and no change
+                empDataDTO.setPhoneNumber(data.getPhoneNumber());
+                empDataDTO.setAge(data.getAge());
+                usersDTO.setPassword(data.getPassword());
+                repo.save(empDataDTO);
+                userRepo.save(usersDTO);
+                // All done now. Need to test it.
+                return "/user/"+uid;
+            }
         }else {
-            return "redirect:/user/"+uid+"reset";
+            return "redirect:/user/"+uid+"/reset";
         }
     }
 }

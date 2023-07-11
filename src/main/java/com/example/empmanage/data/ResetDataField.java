@@ -1,14 +1,30 @@
 package com.example.empmanage.data;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 //Add the field checks at the end
 //Do not allow the name to be changed
 public class ResetDataField {
+    private int id;
     private String name;
+    @NotBlank
+    @Size(min = 6,max = 10)
     private String password;
     private int age;
     private int salary;
+    @NotBlank
     private String phoneNumber;
 
     public ResetDataField() {
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getName() {
