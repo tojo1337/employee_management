@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Reset password</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/static/js/jquery-3.7.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/form.js}"></script>
 </head>
 <body>
     <div class="container">
@@ -14,14 +16,15 @@
             <div class="col-auto">
                 <table class="table table-borderless table-responsive-sm">
                     <!-- Add respective field according to the thymeleaf declaration -->
-                    <form action="#" th:action="@{/user/{id}/reset}(id=${data.id})" th:object="${data}" method="post">
+                    <!-- <form action="#" th:action="@{'/user/'data.id'/reset'}" th:object="${data}" method="post">-->
+                    <form action="#" th:action="@{/user/{userid}/reset(userid=${data.id})}" th:object="${data}" method="post">
                         <tr>
                             <div class="form-group">
                                 <td>
                                     <label>Name : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:value="${data.name}"><br>
+                                    <input type="text" th:value="${data.name}" disabled="true"><br>
                                     <!-- <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td> -->
                                 </td>
                             </div>
@@ -43,8 +46,8 @@
                                     <label>Age : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{age}" required autofocus tabindex="2"><br>
-                                    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name Error</td>
+                                    <input type="text" th:field="*{age}" required tabindex="2" placeholder="18"><br>
+                                    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</td>
                                 </td>
                             </div>
                         </tr>
@@ -54,7 +57,7 @@
                                     <label>Phone number : </label>
                                 </td>
                                 <td>
-                                    <input type="text" th:field="*{phoneNumber}" required autofocus tabindex="3"><br>
+                                    <input type="text" th:field="*{phoneNumber}" required tabindex="3"><br>
                                     <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</td>
                                 </td>
                             </div>

@@ -210,7 +210,7 @@ public class PathMapping {
                 repo.save(empDataDTO);
                 userRepo.save(usersDTO);
                 // All done now. Need to test it.
-                return "/user/"+uid;
+                return "redirect:/user/"+uid;
             }
         }else {
             return "redirect:/user/"+uid+"/reset";

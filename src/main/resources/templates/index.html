@@ -13,8 +13,19 @@
         <div class="container row justify-content-center">
             <div class="col-auto">
                 <h1>Hello world here</h1>
-                <div class="text-center">
-                    <button class="btn btn-outline-danger" id="greet">click me</button>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-borderless table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td><a class="btn btn-outline-primary" th:href="@{/login}">login</a></td>
+                                        <td><a class="btn btn-outline-primary" th:href="@{/register}">register</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
