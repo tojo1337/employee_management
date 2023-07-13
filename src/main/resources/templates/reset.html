@@ -64,7 +64,12 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="col col-sm-12 btn btn-outline-primary btn-lg btn-block" type="submit" value="submit" tabindex="4"><br>
+                                <input class="col col-sm-12 btn btn-outline-primary" type="submit" value="submit" tabindex="4"><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <a class="col col-sm-12 btn btn-outline-primary" th:href="@{/user/{id}(id=${data.id})}">Return</a><br>
                             </td>
                         </tr>
                     </form>
